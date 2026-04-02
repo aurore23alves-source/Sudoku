@@ -44,9 +44,9 @@ td input{
     border-right: 2px solid black;
 }
 .CaseBonne{
-    color: rgb(128, 255, 128);
+    background-color: rgb(128, 255, 128);
 }
 
 .CaseFausse{
-    color: rgb(253, 58, 58);
+    background-color: rgb(253, 58, 58);
 }
