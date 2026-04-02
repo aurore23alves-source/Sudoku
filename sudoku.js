@@ -30,4 +30,28 @@ for (let ligne = 0; ligne < 9; ligne++) {
         }
 
     }
+
+    if (col > 0) {
+
+            let casePrecedente = grille[ligne][col - 1];
+
+            let valeurPrecedente;
+
+            if (casePrecedente.tagName === "INPUT") {
+                valeurPrecedente = casePrecedente.value;
+            } else {
+                valeurPrecedente = casePrecedente.textContent;
+            }
+
+            if (uneCase === valeurPrecedente) {
+                uneCase.style.backgroundColor ="CaseFausse";
+                
+            } else {
+                uneCase.style.backgroundColor ="CaseBonne";
+                
+            }
+    }
+}
+
+
 }
