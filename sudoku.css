@@ -1,0 +1,44 @@
+
+.Grid{
+    margin-left: 35%;
+    margin-top: 100px;
+}
+table {
+    border-collapse: collapse;
+    border: 2px solid black;
+}
+
+table td{
+    border: 1px solid black;
+    padding: 17px 30px;
+}
+
+table tr{
+    border: 1px solid black;
+}
+.Big-Grid{
+     border: 2px solid black;
+}
+
+td{
+    font-weight: bold;
+    font-size: 25px;
+}
+td input{
+    border: none;
+    width: 12px;
+    outline: none;
+    font-size: 25px;
+}
+
+.Lign {
+    border-right: 2px solid black;
+}
+
+.Dark-Case{
+    background-color: rgb(221, 221, 221);
+}
+.Dark-Case-Lign{
+    background-color: rgb(221, 221, 221);
+    border-right: 2px solid black;
+}
