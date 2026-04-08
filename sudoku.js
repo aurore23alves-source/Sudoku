@@ -42,7 +42,7 @@ for (let ligne = 0; ligne < 9; ligne++) {
             uneCase.addEventListener("keydown", function(evenement) {
     
                 // On vérifie que c'est la touche tabulation qui a été appuyée
-                if (evenement.key === "Tab") {
+                if (evenement.key === "Enter") {
 
                     // On empêche le Tab de changer de case tout de suite
                     evenement.preventDefault();
