@@ -1,3 +1,6 @@
+console.log("JS chargé");
+
+
 // On crée un tableau qui va stocker toute les solutions
 
 let solution = [
