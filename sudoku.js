@@ -37,9 +37,11 @@ for (let ligne = 0; ligne < 9; ligne++) {
 
         // Si la case est un input 
         if (uneCase.tagName === "INPUT") {
+            console.log("input trouvé :", uneCase.id);
 
             // On attend quand l'utilisateur appuie sur une touche du clavier
             uneCase.addEventListener("keydown", function(evenement) {
+                console.log("touche appuyée :", evenement.key);
 
                 // On vérifie que c'est la touche tabulation qui a été appuyée
                 if (evenement.key === "Tab") {
