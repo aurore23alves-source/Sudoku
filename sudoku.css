@@ -17,10 +17,9 @@ table td{
 table tr{
     border: 1px solid black;
 }
-.Big-Grid{
-     border: 2px solid black;
+tr.Separateur td {
+    border-top: 3px solid black;
 }
-
 td{
     font-weight: bold;
     font-size: 25px;
