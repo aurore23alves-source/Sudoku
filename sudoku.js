@@ -41,8 +41,7 @@ for (let ligne = 0; ligne < 9; ligne++) {
 
             // On attend quand l'utilisateur appuie sur une touche du clavier
             uneCase.addEventListener("keydown", function(evenement) {
-                console.log("touche appuyée :", evenement.key);
-
+                 console.log("touche :", evenement.key);
                 // On vérifie que c'est la touche tabulation qui a été appuyée
                 if (evenement.key === "Tab") {
 
