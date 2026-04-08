@@ -1,57 +1,37 @@
 // Initialisation d'un tableau vide pour représenter la grille (9x9)
 let grille = [];
 
-// Boucle sur les lignes (0 à 8)
 for (let ligne = 0; ligne < 9; ligne++) {
+  grille[ligne] = [];
 
-    // On initialise chaque ligne comme un tableau
-    grille[ligne] = [];
+  for (let col = 0; col < 9; col++) {
 
-    // Boucle sur les colonnes (0 à 8)
-    for (let col = 0; col < 9; col++) {
+    let uneCase = document.getElementById(${ligne}-${col});
 
-        // Récupère l'élément HTML 
-        grille[ligne][col] = document.getElementById(`${ligne}-${col}`);
+    // ON GARDE L'ÉLÉMENT HTML
+    grille[ligne][col] = uneCase;
 
-        // Stocke l'élément dans une variable 
-        let uneCase = grille[ligne][col];
+    // Si c’est un input → on ajoute l’événement
+    if (uneCase.tagName === "INPUT") {
 
-        // Vérifie si la case est un champ input (modifiable par l'utilisateur)
-        if (uneCase.tagName === "INPUT") {
+      uneCase.addEventListener("keyup", () => {
 
-            // Si oui, on récupère la valeur saisie par l'utilisateur
-            grille[ligne][col] = uneCase.value;
+        let value = uneCase.value;
 
+        // reset couleurs
+        uneCase.classList.remove("CaseBonne", "CaseFausse");
+
+        if (value === "") return;
+
+        // Vérif simple (juste 1-9)
+        if (value >= "1" && value <= "9") {
+          uneCase.classList.add("CaseBonne");
         } else {
-
-            // Sinon, on récupère le texte contenu dans l'élément (case fixe)
-            grille[ligne][col] = uneCase.textContent;
-
+          uneCase.classList.add("CaseFausse");
         }
 
+      });
+
     }
-
-    if (col >= 0) {
-
-            let casePrecedente = grille[ligne][col - 1];
-
-            let valeurPrecedente;
-
-            if (casePrecedente.tagName === "INPUT") {
-                valeurPrecedente = casePrecedente.value;
-            } else {
-                valeurPrecedente = casePrecedente.textContent;
-            }
-
-            if (uneCase === valeurPrecedente) {
-                uneCase.style ="CaseFausse";
-                
-            } else {
-                uneCase.style ="CaseBonne";
-                
-            }
-    }
-}
-
-
+  }
 }
