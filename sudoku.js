@@ -5,8 +5,8 @@ console.log("JS chargé");
 
 let solution = [
     [3, 7, 4, 1, 6, 5, 9, 2, 8],
-    [1, 8, 5, 9, 2, 4, 7, 6, 9],
-    [9, 6, 2, 8, 1, 3, 4, 1, 5],
+    [1, 8, 5, 9, 2, 4, 7, 6, 3],
+    [9, 6, 2, 8, 7, 3, 4, 1, 5],
 
     [5, 3, 1, 4, 8, 9, 6, 7, 2],
     [6, 4, 9, 7, 5, 2, 8, 3, 1],
@@ -70,7 +70,17 @@ for (let ligne = 0; ligne < 9; ligne++) {
                         caseParente.classList.add("CaseFausse");
 
                     }
+
+                    if (verifierSudoku()) {
+                        document.getElementById("messageFin").textContent = "Bravo ! Sudoku terminé !";
+                    }
+
+                    if (evenement.key === "Delete") {
+                        caseParente.classList.remove("CaseBonne", "CaseFausse");
+                    }
+
                 }
+
             });
         }
     }
