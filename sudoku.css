@@ -81,3 +81,10 @@ p{
     color: #F5F0AF;
 }
 
+@media (max-width:720px){
+    .Grid{
+    display: flex;
+    flex-direction: column;
+
+   }
+}
