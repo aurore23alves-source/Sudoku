@@ -16,7 +16,10 @@ table {
 
 table td{
     border: 1px solid rgb(255, 255, 255);
-    padding: 15px 25px;
+    padding: 0;
+     width: 65px;
+    height: 65px;
+    text-align: center;
 }
 
 table tr{
@@ -31,10 +34,15 @@ td{
 }
 td input{
     border: none;
-    width: 12px;
+    width: 100%;
+    heigth: 100%;
     outline: none;
     font-size: 25px;
+    font-weight: bold;
     color: #ffffff;
+    background-color: transparent;
+    text-align: center;
+    cursor: pointer;
 }
 
 .Lign {
