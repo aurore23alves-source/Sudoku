@@ -45,6 +45,12 @@ td input{
     cursor: pointer;
 }
 
+td input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 0, 0.3);
+    box-shadow: 0 0 10px yellow;
+}
+
 .Lign {
     border-right: 2px solid rgb(255, 255, 255);
 }

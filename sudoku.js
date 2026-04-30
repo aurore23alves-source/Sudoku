@@ -84,6 +84,7 @@ for (let ligne = 0; ligne < 9; ligne++) {
 
             });
 
+            // Pour supprimer avec la touche Suppr
             uneCase.addEventListener("keydown", function(evenement) {
                 if (evenement.key === "Delete" || evenement.key === "Backspace") {
                     uneCase.value = "";
