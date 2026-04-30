@@ -43,6 +43,7 @@ td input{
     background-color: transparent;
     text-align: center;
     cursor: pointer;
+    caret-color: transparent;
 }
 
 td input:focus {
