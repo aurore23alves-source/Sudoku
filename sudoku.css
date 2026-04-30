@@ -46,8 +46,9 @@ td input{
     caret-color: transparent;
 }
 
+
 .Lign {
-    border-right: 2px solid rgb(255, 255, 255);
+    border-right: 4px solid rgb(255, 255, 255);
 }
 
 .Dark-Case{
@@ -55,7 +56,7 @@ td input{
 }
 .Dark-Case-Lign{
     background-color: rgb(48, 149, 207);
-    border-right: 2px solid rgb(255, 255, 255);
+    border-right: 4px solid rgb(255, 255, 255);
 }
 .CaseBonne{
     background-color: rgb(128, 255, 128);
