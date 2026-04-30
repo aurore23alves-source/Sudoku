@@ -71,6 +71,7 @@ for (let ligne = 0; ligne < 9; ligne++) {
 
                     }
 
+                      // Message de fin
                     if (verifierSudoku()) {
                         document.getElementById("messageFin").textContent = "Bravo ! Sudoku terminé !";
                     }
