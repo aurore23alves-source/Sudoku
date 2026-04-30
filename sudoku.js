@@ -82,6 +82,15 @@ for (let ligne = 0; ligne < 9; ligne++) {
                 }
 
             });
+
+            uneCase.addEventListener("keydown", function(evenement) {
+                if (evenement.key === "Delete" || evenement.key === "Backspace") {
+                    uneCase.value = "";
+                    uneCase.parentElement.classList.remove("CaseBonne", "CaseFausse");
+                }
+            });
         }
     }
 }
+
+
