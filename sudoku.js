@@ -1,5 +1,3 @@
-console.log("JS chargé");
-
 
 // On crée un tableau qui va stocker toute les solutions
 
@@ -71,20 +69,33 @@ for (let ligne = 0; ligne < 9; ligne++) {
 
                     }
 
-                      // Message de fin
-                    if (verifierSudoku()) {
-                        document.getElementById("messageFin").textContent = "Bravo ! Sudoku terminé !";
+
+                    
+                    //Pour passer directement à la case suivante après avoir taper sur Entrer
+                    let prochaineCase = col + 1;
+                    let prochaineLigne = ligne;
+
+                    // Si on a fait toute les case d'une ligne, on passe à la première case de la ligne suivante
+                    if (prochaineCase > 8) {
+                        prochaineCase = 0;
+                        prochaineLigne = ligne + 1;
                     }
 
-                    if (evenement.key === "Delete") {
-                        caseParente.classList.remove("CaseBonne", "CaseFausse");
+                    // On vérifie qu'on est pas sorti du tableau
+                    if (prochaineLigne < 9) {
+                        // On va chercher dans le tableau grille l'élément HTML de la case suivante
+                        let casesuivante = grille[prochaineLigne][prochaineCase];
+                        //On saute les cases fixes et pass directement à la case suivante ayant un input
+                        if (casesuivante.tagName === "INPUT") {
+                            casesuivante.focus();
+                        }
                     }
 
                 }
 
             });
 
-            // Pour supprimer avec la touche Suppr
+            // Pour supprimer la valeur de la case ainsi que la couleru de la case avec la touche Suppr et la touche effacer 
             uneCase.addEventListener("keydown", function(evenement) {
                 if (evenement.key === "Delete" || evenement.key === "Backspace") {
                     uneCase.value = "";
