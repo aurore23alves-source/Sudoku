@@ -61,11 +61,13 @@ for (let ligne = 0; ligne < 9; ligne++) {
 
                         // La valeur est correcte, on met la case en vert
                         caseParente.classList.add("CaseBonne");
+                        verifierFin();
 
                     } else {
 
                         // La valeur est fausse, on met la case en rouge
                         caseParente.classList.add("CaseFausse");
+                        verifierFin();
 
                     }
 
@@ -75,19 +77,33 @@ for (let ligne = 0; ligne < 9; ligne++) {
                     let prochaineCase = col + 1;
                     let prochaineLigne = ligne;
 
-                    // Si on a fait toute les case d'une ligne, on passe à la première case de la ligne suivante
+                    // Si on a fait toute les cases d'une ligne, on passe à la première case de la ligne suivante
                     if (prochaineCase > 8) {
                         prochaineCase = 0;
                         prochaineLigne = ligne + 1;
                     }
 
-                    // On vérifie qu'on est pas sorti du tableau
+                    // On vérifie qu'on est pas sorti du tableau et on met à jour la case suivante 
                     if (prochaineLigne < 9) {
-                        // On va chercher dans le tableau grille l'élément HTML de la case suivante
-                        let casesuivante = grille[prochaineLigne][prochaineCase];
-                        //On saute les cases fixes et pass directement à la case suivante ayant un input
-                        if (casesuivante.tagName === "INPUT") {
-                            casesuivante.focus();
+                        let caseSuivante = grille[prochaineLigne][prochaineCase];
+
+                        // Tant que la case suivante est fixe, on continue d'avancer
+                        while (caseSuivante.tagName !== "INPUT" && prochaineLigne < 9) {
+                            prochaineCase = prochaineCase + 1;
+                            // Si on a fait toute les cases d'une ligne, on passe à la première case de la ligne suivante
+                            if (prochaineCase > 8) {
+                                prochaineCase = 0;
+                                prochaineLigne = prochaineLigne + 1;
+                            }
+                            // On met à jour la case suivante
+                            if (prochaineLigne < 9) {
+                                caseSuivante = grille[prochaineLigne][prochaineCase];
+                            }
+                        }
+
+                        // On met le focus sur la prochaine case input trouvée
+                        if (prochaineLigne < 9) {
+                            caseSuivante.focus();
                         }
                     }
 
@@ -106,4 +122,27 @@ for (let ligne = 0; ligne < 9; ligne++) {
     }
 }
 
+//Fonction permettant de vérifier si toute la grille est remplie
+function verifierFin() {
+    for (ligne = 0; ligne < 9; ligne++) {
+        for (col = 0; col < 9; col++) {
+            // Si une case est encore vide, on affiche aucun mot de fin
+            if (grille[ligne][col].tagName === "INPUT" && grille[ligne][col].value === "") {
+                return;
+            }
+        }
+    }
+    // Si on arrive ici, toutes les cases sont remplies, on vérifie la solution
+    for (ligne = 0; ligne < 9; ligne++) {
+        for (col = 0; col < 9; col++) {
+            // Si une case ne correspond pas à la solution on affiche un message faux
+            if (grille[ligne][col].tagName === "INPUT" && grille[ligne][col].value != solution[ligne][col]) {
+                document.getElementById("messageFin").textContent = "Malheureusement tu as faux !";
+                return;
+            }
+        }
+    }
+    // Si tout correspond à la solution on affiche un message de félicitation
+    document.getElementById("messageFin").textContent = "Bravo tu as tout bon !";
+}
 
