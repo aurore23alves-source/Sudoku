@@ -173,6 +173,18 @@ document.getElementById("boutonGarcon").addEventListener("click", function() {
     creerDecors("hiver"); // 👈 AJOUT
 });
 
+// Pour retourner au thème de base
+document.getElementById("boutonMenu").addEventListener("click", function() {
+    
+    // enlève les thèmes
+    document.body.classList.remove("ModeFille");
+    document.body.classList.remove("ModeGarcon");
+
+    // supprime les décorations
+    let container = document.getElementById("decorations");
+    container.innerHTML = "";
+});
+
 //Pour afficher la décoration
 function creerDecors(type) {
     let container = document.getElementById("decorations");
@@ -198,3 +210,23 @@ function creerDecors(type) {
         container.appendChild(elem);
     }
 }
+
+// Temps de jeux
+let secondes = 0;
+
+function mettreAJourTimer() {
+    secondes++;
+
+    let minutes = Math.floor(secondes / 60);
+    let sec = secondes % 60;
+
+    // format 00:00
+    let affichage = 
+        (minutes < 10 ? "0" + minutes : minutes) + ":" +
+        (sec < 10 ? "0" + sec : sec);
+
+    document.getElementById("timer").textContent = affichage;
+}
+
+// lance le timer toutes les secondes
+setInterval(mettreAJourTimer, 1000);

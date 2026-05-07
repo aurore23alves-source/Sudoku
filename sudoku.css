@@ -103,18 +103,27 @@ p{
     color: #3f0052;
     font-size: 20px;
 }
-.MessageFin{
-    color: #ffffff;
-    font-size: 31px;
-    background-color: rgb(255, 215, 246);
-    width: 580px;
+
+.MessageFin {
+    
+    left: -350px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
     text-align: center;
-    margin-right: 700pxpx;
+    background-color: rgb(255, 215, 246);
+    padding: 15px;
+    border-radius: 15px;
 }
+
+.GameMessage {
+  margin-right: px;
+}
+
 .boutonValider{
     width: 200px;
     height: 50px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 247, 173);
     font-size: 30px;
     margin-top: 20px;
     margin-left: 770px;
@@ -127,11 +136,15 @@ p{
 }
 
 .boutonMode{
+    
+    background-color:rgb(255, 247, 173);
     width: 150px;
     height: 50px;
     font-size: 25px;
     margin: 10px;
     cursor: pointer;
+    border-radius: 999px;
+
 }
 
 .ModeGarcon{
@@ -149,6 +162,7 @@ p{
 .ModeFille .Dark-Case, .ModeFille .Dark-Case-Lign{
     background-color: rgb(245, 239, 126) ;
 }
+
 
 #decorations {
     position: fixed;
@@ -169,6 +183,7 @@ p{
     opacity: 0.8;
 }
 
+/* créer une animation en CSS*/
 @keyframes fall {
     0% {
         transform: translateY(-50px);
@@ -176,4 +191,16 @@ p{
     100% {
         transform: translateY(110vh);
     }
+}
+
+#timer {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
 }
