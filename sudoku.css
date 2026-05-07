@@ -1,22 +1,23 @@
 *{
-    background-color: black;
     font-family: "Play", sans-serif;
+}
+body{
+    background-color: rgb(223, 223, 223);
 }
 
 
-
 .Grid{
-    margin-left: 26%;
+    margin-left: 30%;
     margin-top: 50px;
 
 }
 table {
     border-collapse: collapse;
-    border: 2px solid rgb(255, 255, 255);
+    border: 2px solid rgb(0, 0, 0);
 }
 
 table td{
-    border: 1px solid rgb(255, 255, 255);
+    border: 1px solid rgb(0, 0, 0);
     padding: 0;
      width: 65px;
     height: 65px;
@@ -24,10 +25,10 @@ table td{
 }
 
 table tr{
-    border: 1px solid rgb(255, 255, 255);
+    border: 1px solid rgb(0, 0, 0);
 }
 tr.Separateur td {
-    border-top: 3px solid #ffffff;
+    border-top: 3px solid #000000;
 }
 td{
     font-weight: bold;
@@ -52,12 +53,12 @@ td input:focus {
     outline: none;
     height: 58px;
     width: 56px ;
-    border: 3px solid yellow;
-    box-shadow: 0 0 8px yellow;
+    border: 3px solid rgb(255, 255, 255);
+    box-shadow: 0 0 8px rgb(255, 255, 255);
 }
 
 .Lign {
-    border-right: 4px solid rgb(255, 255, 255);
+    border-right: 4px solid rgb(0, 0, 0);
 }
 
 .Dark-Case{
@@ -65,7 +66,7 @@ td input:focus {
 }
 .Dark-Case-Lign{
     background-color: rgb(48, 149, 207);
-    border-right: 4px solid rgb(255, 255, 255);
+    border-right: 4px solid rgb(0, 0, 0);
 }
 .CaseBonne{
     background-color: rgb(128, 255, 128);
@@ -76,7 +77,7 @@ td input:focus {
 }
 
 .SudokuTitle{
-    color:#F5DA0A;
+    color:#000000;
     font-size: 50px;
 }
 
@@ -94,20 +95,58 @@ td input:focus {
 }
 
 h1{
-    color:#F5DA0A;
+    color:#000000;
 }
 
 
 p{
-    color: #F5F0AF;
+    color: #3f0052;
     font-size: 20px;
 }
 .MessageFin{
-    color: #F5DA0A;
-    font-size: 45px;
-    background-color: rgb(43, 43, 43);
-    width: 880px;
+    color: #ffffff;
+    font-size: 31px;
+    background-color: rgb(255, 215, 246);
+    width: 580px;
     text-align: center;
-    margin: 30px auto;
+    margin-right: 700pxpx;
+}
+.boutonValider{
+    width: 200px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    font-size: 30px;
+    margin-top: 20px;
+    margin-left: 770px;
+    border-radius: 999px;
+}
+
+.Modes{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.boutonMode{
+    width: 150px;
+    height: 50px;
+    font-size: 25px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.ModeGarcon{
+    background-color: rgb(89, 208, 255) ;
+}
+
+.ModeGarcon .Dark-Case, .ModeGarcon .Dark-Case-Lign{
+    background-color: rgb(255, 131, 203) ;
+}
+
+.ModeFille{
+    background-color: rgb(255, 131, 203) ;
+}
+
+.ModeFille .Dark-Case, .ModeFille .Dark-Case-Lign{
+    background-color: rgb(89, 208, 255) ;
 }
 

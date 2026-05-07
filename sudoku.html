@@ -10,6 +10,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  <div class="Modes">
+    <button class="boutonMode" id="boutonGarcon">Garçon</button>
+    <button class="boutonMode" id="boutonFille">Fille</button>
+</div>
   
   <div class="Title">
     <h2 class="SudokuTitle">Sudoku</h2>
@@ -76,7 +81,7 @@
           <td class="Dark-Case" id="4-1">4</td>
           <td class="Lign"><input type="text" id="4-2" maxlength="1" pattern="[1-9]"></td>
           <td class="Dark-Case" id="4-3">7</td>
-          <td><input type="text" id="4-4"></td>
+          <td><input type="text" id="4-4" maxlength="1" pattern="[1-9]"></td>
           <td class="Lign"><input type="text" id="4-5" maxlength="1" pattern="[1-9]"></td>
           <td class="Dark-Case" id="4-6">8</td>
           <td class="Dark-Case" id="4-7">3</td>
@@ -155,7 +160,7 @@
     </div>
 
   </section>
-  <p class="MessageFin" id="messageFin"></p>
+  <button class="boutonValider" id="boutonValider">Valider</button>
   <script src="sudoku.js"></script>
 </body>
 </html>

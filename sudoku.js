@@ -50,33 +50,6 @@ for (let ligne = 0; ligne < 9; ligne++) {
                     // On empêche le Tab de changer de case tout de suite
                     evenement.preventDefault();
 
-                    // parentElement remonte au parent HTML de l'input
-                    // l'input est dans un <td>, donc caseParente = la <td>
-                    // on en a besoin pour pouvoir changer la couleur de la case
-                    let caseParente = uneCase.parentElement;
-
-                    // On retire les anciennes couleurs avant d'en remettre une
-                    caseParente.classList.remove("CaseBonne", "CaseFausse");
-
-                    // Si l'input est vide on ne fait rien
-                    if (uneCase.value === "") return;
-
-                    // On verifie si l'input est égale à la bonne réponse (solution[ligne][col])
-                    if (uneCase.value == solution[ligne][col]) {
-
-                        // La valeur est correcte, on met la case en vert
-                        caseParente.classList.add("CaseBonne");
-                        verifierFin();
-
-                    } else {
-
-                        // La valeur est fausse, on met la case en rouge
-                        caseParente.classList.add("CaseFausse");
-                        verifierFin();
-
-                    }
-
-
                     
                     //Pour passer directement à la case suivante après avoir taper sur Entrer
                     let prochaineCase = col + 1;
@@ -138,16 +111,62 @@ function verifierFin() {
         }
     }
     // Si on arrive ici, toutes les cases sont remplies, on vérifie la solution
+    let Erreurs = 0;
     for (ligne = 0; ligne < 9; ligne++) {
         for (col = 0; col < 9; col++) {
-            // Si une case ne correspond pas à la solution on affiche un message faux
+            // On additionne le nombre de case ne correspond pas à la solution pour avoir le nombre d'erreurs
             if (grille[ligne][col].tagName === "INPUT" && grille[ligne][col].value != solution[ligne][col]) {
-                document.getElementById("messageFin").textContent = "Malheureusement tu as faux !";
+                Erreurs = Erreurs + 1;
+            }
+        }
+    }
+    // Si il y a des erreurs on affiche le nombre d'erreurs
+    if (Erreurs > 0) {
+        document.getElementById("messageFin").textContent = "Malheureusement tu as faux ! Tu as fait " + Erreurs + " Erreur(s)";
+    } else {
+        // Si tout correspond à la solution on affiche un message de félicitation
+        document.getElementById("messageFin").textContent = "Bravo tu as tout bon !";
+    }
+}
+
+    // Quand on clique sur le bouton valider, on affiche les couleurs de toutes les cases
+    document.getElementById("boutonValider").addEventListener("click", function() {
+    for (ligne = 0; ligne < 9; ligne++) {
+        for (col = 0; col < 9; col++) {
+            if (grille[ligne][col].tagName === "INPUT" && grille[ligne][col].value === "") {
+                // Si une case est vide on affiche un message
+                document.getElementById("messageFin").textContent = "Veuillez remplir toutes les cases !";
                 return;
             }
         }
     }
-    // Si tout correspond à la solution on affiche un message de félicitation
-    document.getElementById("messageFin").textContent = "Bravo tu as tout bon !";
-}
+    // Si toutes les cases sont remplies on affiche les couleurs
+    for (ligne = 0; ligne < 9; ligne++) {
+        for (col = 0; col < 9; col++) {
+            if (grille[ligne][col].tagName === "INPUT") {
+                let caseParente = grille[ligne][col].parentElement;
+                caseParente.classList.remove("CaseBonne", "CaseFausse");
+                if (grille[ligne][col].value == solution[ligne][col]) {
+                    caseParente.classList.add("CaseBonne");
+                } else {
+                    caseParente.classList.add("CaseFausse");
+                }
+            }
+        }
+    }
+    verifierFin();
+});
 
+// Quand on clique sur le bouton garçon, on change le mode
+document.getElementById("boutonGarcon").addEventListener("click", function() {
+    // On retire l'ancien mode et on met le mode garçon
+    document.body.classList.remove("ModeFille");
+    document.body.classList.add("ModeGarcon");
+});
+
+// Quand on clique sur le bouton fille, on change le mode
+document.getElementById("boutonFille").addEventListener("click", function() {
+    // On retire l'ancien mode et on met le mode fille
+    document.body.classList.remove("ModeGarcon");
+    document.body.classList.add("ModeFille");
+});
