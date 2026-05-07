@@ -157,16 +157,41 @@ function verifierFin() {
     verifierFin();
 });
 
-// Quand on clique sur le bouton garçon, on change le mode
-document.getElementById("boutonGarcon").addEventListener("click", function() {
-    // On retire l'ancien mode et on met le mode garçon
-    document.body.classList.remove("ModeFille");
-    document.body.classList.add("ModeGarcon");
-});
-
-// Quand on clique sur le bouton fille, on change le mode
 document.getElementById("boutonFille").addEventListener("click", function() {
-    // On retire l'ancien mode et on met le mode fille
     document.body.classList.remove("ModeGarcon");
     document.body.classList.add("ModeFille");
+
+    creerDecors("ete"); // ajout papillons
 });
+
+document.getElementById("boutonGarcon").addEventListener("click", function() {
+    document.body.classList.remove("ModeFille");
+    document.body.classList.add("ModeGarcon");
+
+    creerDecors("hiver"); // 👈 AJOUT
+});
+
+function creerDecors(type) {
+    let container = document.getElementById("decorations");
+
+    // on vide avant de recréer
+    container.innerHTML = "";
+
+    for (let i = 0; i < 30; i++) {
+        let elem = document.createElement("div");
+
+        if (type === "hiver") {
+            elem.classList.add("flocon");
+            elem.textContent = "❄️";
+        } else {
+            elem.classList.add("papillon");
+            elem.textContent = "🦋";
+        }
+
+        elem.style.left = Math.random() * 100 + "vw";
+        elem.style.animationDuration = (3 + Math.random() * 5) + "s";
+        elem.style.fontSize = (15 + Math.random() * 20) + "px";
+
+        container.appendChild(elem);
+    }
+}
