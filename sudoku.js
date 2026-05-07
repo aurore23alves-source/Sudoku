@@ -157,6 +157,7 @@ function verifierFin() {
     verifierFin();
 });
 
+// Pour afficher les papillons dans le fond
 document.getElementById("boutonFille").addEventListener("click", function() {
     document.body.classList.remove("ModeGarcon");
     document.body.classList.add("ModeFille");
@@ -164,6 +165,7 @@ document.getElementById("boutonFille").addEventListener("click", function() {
     creerDecors("ete"); // ajout papillons
 });
 
+//Pour ajouter les flocons dans le fond
 document.getElementById("boutonGarcon").addEventListener("click", function() {
     document.body.classList.remove("ModeFille");
     document.body.classList.add("ModeGarcon");
@@ -171,6 +173,7 @@ document.getElementById("boutonGarcon").addEventListener("click", function() {
     creerDecors("hiver"); // 👈 AJOUT
 });
 
+//Pour afficher la décoration
 function creerDecors(type) {
     let container = document.getElementById("decorations");
 
