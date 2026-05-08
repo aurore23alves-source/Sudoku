@@ -33,6 +33,11 @@ for (let ligne = 0; ligne < 9; ligne++) {
         // On stocke l'élément dans la grille
         grille[ligne][col] = uneCase;
 
+        // Pour ne pas séléctionner les cases fixes
+        if (uneCase.tagName !== "INPUT") {
+        uneCase.classList.add("case-fixe");
+        }
+
         // Si la case est un input 
         if (uneCase.tagName === "INPUT") {
 
@@ -157,39 +162,49 @@ function verifierFin() {
     verifierFin();
 });
 
-// Pour afficher les papillons dans le fond
-document.getElementById("boutonFille").addEventListener("click", function() {
-    document.body.classList.remove("ModeGarcon");
-    document.body.classList.add("ModeFille");
+function resetModes() {
+    document.body.classList.remove(
+        "ModeEte",
+        "ModeHiver",
+        "ModePrintemps",
+        "ModeAutomne"
+    );
+}
 
-    creerDecors("ete"); // ajout papillons
+document.getElementById("boutonEte").addEventListener("click", function() {
+    resetModes();
+    document.body.classList.add("ModeEte");
+    creerDecors("ete");
 });
 
-//Pour ajouter les flocons dans le fond
-document.getElementById("boutonGarcon").addEventListener("click", function() {
-    document.body.classList.remove("ModeFille");
-    document.body.classList.add("ModeGarcon");
-
-    creerDecors("hiver"); // 👈 AJOUT
+document.getElementById("boutonHiver").addEventListener("click", function() {
+    resetModes();
+    document.body.classList.add("ModeHiver");
+    creerDecors("hiver");
 });
 
-// Pour retourner au thème de base
+
+document.getElementById("boutonPrintemps").addEventListener("click", function() {
+    resetModes();
+    document.body.classList.add("ModePrintemps");
+    creerDecors("printemps");
+});
+
+document.getElementById("boutonAutomne").addEventListener("click", function() {
+    resetModes();
+    document.body.classList.add("ModeAutomne");
+    creerDecors("automne");
+});
+
 document.getElementById("boutonMenu").addEventListener("click", function() {
-    
-    // enlève les thèmes
-    document.body.classList.remove("ModeFille");
-    document.body.classList.remove("ModeGarcon");
+    resetModes();
 
-    // supprime les décorations
     let container = document.getElementById("decorations");
     container.innerHTML = "";
 });
 
-//Pour afficher la décoration
 function creerDecors(type) {
     let container = document.getElementById("decorations");
-
-    // on vide avant de recréer
     container.innerHTML = "";
 
     for (let i = 0; i < 30; i++) {
@@ -198,9 +213,18 @@ function creerDecors(type) {
         if (type === "hiver") {
             elem.classList.add("flocon");
             elem.textContent = "❄️";
-        } else {
+
+        } else if (type === "ete") {
             elem.classList.add("papillon");
             elem.textContent = "🦋";
+
+        } else if (type === "printemps") {
+            elem.classList.add("papillon");
+            elem.textContent = "🌸";
+
+        } else if (type === "automne") {
+            elem.classList.add("feuille");
+            elem.textContent = "🍂";
         }
 
         elem.style.left = Math.random() * 100 + "vw";
