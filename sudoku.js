@@ -33,6 +33,11 @@ for (let ligne = 0; ligne < 9; ligne++) {
         // On stocke l'élément dans la grille
         grille[ligne][col] = uneCase;
 
+        // Pour ne pas séléctionner les cases fixes
+        if (uneCase.tagName !== "INPUT") {
+        uneCase.classList.add("case-fixe");
+        }
+
         // Si la case est un input 
         if (uneCase.tagName === "INPUT") {
 
@@ -157,16 +162,95 @@ function verifierFin() {
     verifierFin();
 });
 
-// Quand on clique sur le bouton garçon, on change le mode
-document.getElementById("boutonGarcon").addEventListener("click", function() {
-    // On retire l'ancien mode et on met le mode garçon
-    document.body.classList.remove("ModeFille");
-    document.body.classList.add("ModeGarcon");
+function resetModes() {
+    document.body.classList.remove(
+        "ModeEte",
+        "ModeHiver",
+        "ModePrintemps",
+        "ModeAutomne"
+    );
+}
+
+document.getElementById("boutonEte").addEventListener("click", function() {
+    resetModes();
+    document.body.classList.add("ModeEte");
+    creerDecors("ete");
 });
 
-// Quand on clique sur le bouton fille, on change le mode
-document.getElementById("boutonFille").addEventListener("click", function() {
-    // On retire l'ancien mode et on met le mode fille
-    document.body.classList.remove("ModeGarcon");
-    document.body.classList.add("ModeFille");
+document.getElementById("boutonHiver").addEventListener("click", function() {
+    resetModes();
+    document.body.classList.add("ModeHiver");
+    creerDecors("hiver");
 });
+
+
+document.getElementById("boutonPrintemps").addEventListener("click", function() {
+    resetModes();
+    document.body.classList.add("ModePrintemps");
+    creerDecors("printemps");
+});
+
+document.getElementById("boutonAutomne").addEventListener("click", function() {
+    resetModes();
+    document.body.classList.add("ModeAutomne");
+    creerDecors("automne");
+});
+
+document.getElementById("boutonMenu").addEventListener("click", function() {
+    resetModes();
+
+    let container = document.getElementById("decorations");
+    container.innerHTML = "";
+});
+
+function creerDecors(type) {
+    let container = document.getElementById("decorations");
+    container.innerHTML = "";
+
+    for (let i = 0; i < 30; i++) {
+        let elem = document.createElement("div");
+
+        if (type === "hiver") {
+            elem.classList.add("flocon");
+            elem.textContent = "❄️";
+
+        } else if (type === "ete") {
+            elem.classList.add("papillon");
+            elem.textContent = "🦋";
+
+        } else if (type === "printemps") {
+            elem.classList.add("papillon");
+            elem.textContent = "🌸";
+
+        } else if (type === "automne") {
+            elem.classList.add("feuille");
+            elem.textContent = "🍂";
+        }
+
+        elem.style.left = Math.random() * 100 + "vw";
+        elem.style.animationDuration = (3 + Math.random() * 5) + "s";
+        elem.style.fontSize = (15 + Math.random() * 20) + "px";
+
+        container.appendChild(elem);
+    }
+}
+
+// Temps de jeux
+let secondes = 0;
+
+function mettreAJourTimer() {
+    secondes++;
+
+    let minutes = Math.floor(secondes / 60);
+    let sec = secondes % 60;
+
+    // format 00:00
+    let affichage = 
+        (minutes < 10 ? "0" + minutes : minutes) + ":" +
+        (sec < 10 ? "0" + sec : sec);
+
+    document.getElementById("timer").textContent = affichage;
+}
+
+// lance le timer toutes les secondes
+setInterval(mettreAJourTimer, 1000);
