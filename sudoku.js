@@ -33,6 +33,28 @@ for (let ligne = 0; ligne < 9; ligne++) {
         // On stocke l'élément dans la grille
         grille[ligne][col] = uneCase;
 
+        // Surlignage ligne/colonne au focus
+        if (uneCase.tagName === "INPUT") {
+            uneCase.addEventListener("focus", function() {
+                // Supprime les anciens surlignages
+                retirerSurlignage();
+                // Surligne toute la ligne
+                for (let c = 0; c < 9; c++) {
+                    grille[ligne][c].classList.add("Surlign-Ligne");
+                }
+                // Surligne toute la colonne
+                for (let l = 0; l < 9; l++) {
+                    grille[l][col].classList.add("Surlign-Col");
+                }
+                // Surligne la case cliquée elle-même plus fort
+                uneCase.classList.add("Surlign-Col");
+            });
+
+            uneCase.addEventListener("blur", function() {
+                retirerSurlignage();
+            });
+        }
+
         // Pour ne pas séléctionner les cases fixes
         if (uneCase.tagName !== "INPUT") {
         uneCase.classList.add("case-fixe");
@@ -162,6 +184,16 @@ function verifierFin() {
     verifierFin();
 });
 
+function retirerSurlignage() {
+    for (let l = 0; l < 9; l++) {
+        for (let c = 0; c < 9; c++) {
+            if (grille[l] && grille[l][c]) {
+                grille[l][c].classList.remove("Surlign-Ligne", "Surlign-Col");
+            }
+        }
+    }
+}
+
 function resetModes() {
     document.body.classList.remove(
         "ModeEte",
@@ -177,11 +209,6 @@ document.getElementById("boutonEte").addEventListener("click", function() {
     creerDecors("ete");
 });
 
-document.getElementById("boutonHiver").addEventListener("click", function() {
-    resetModes();
-    document.body.classList.add("ModeHiver");
-    creerDecors("hiver");
-});
 
 
 document.getElementById("boutonPrintemps").addEventListener("click", function() {
@@ -195,6 +222,13 @@ document.getElementById("boutonAutomne").addEventListener("click", function() {
     document.body.classList.add("ModeAutomne");
     creerDecors("automne");
 });
+
+document.getElementById("boutonHiver").addEventListener("click", function() {
+    resetModes();
+    document.body.classList.add("ModeHiver");
+    creerDecors("hiver");
+});
+
 
 document.getElementById("boutonMenu").addEventListener("click", function() {
     resetModes();
@@ -254,3 +288,4 @@ function mettreAJourTimer() {
 
 // lance le timer toutes les secondes
 setInterval(mettreAJourTimer, 1000);
+

@@ -187,6 +187,15 @@ p{
     transform: translateY(-3px) scale(1.03);
 }
 
+
+.Surlign-Ligne {
+    background-color: rgba(171, 214, 255, 0.548) !important;
+}
+
+.Surlign-Col {
+    background-color:rgba(171, 214, 255, 0.548) !important;
+}
+
 .Modes{
     margin-right: 50px;
     margin-bottom: 20px;
