@@ -232,8 +232,14 @@ function ajouterEvenements(uneCase, ligne, col) {
 
     // On attend quand l'utilisateur appuie sur une touche du clavier
     uneCase.addEventListener("keydown", function(evenement) {
+        //Autorise seulement les chiffres entre 1 et 9
+        if (!/^[1-9]$/.test(evenement.key) &&
+            evenement.key !== "Backspace" &&
+            evenement.key !== "Delete" &&
+            evenement.key !== "Enter" &&
+            evenement.key !== "Tab" &&
+           !evenement.key.startsWith("Arrow")) {
 
-        if (evenement.key === "0") {
             evenement.preventDefault();
         }
 
