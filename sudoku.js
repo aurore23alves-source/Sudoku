@@ -202,8 +202,8 @@ function chargerNiveau(saison) {
     document.getElementById("timer").textContent = "00:00";
     document.getElementById("messageFin").textContent = "";
 
-    // On relance le timer
-    if (timerInterval) clearInterval(timerInterval);
+    //Arrete le timer avant d'un relancer un nouveau
+    if (timerInterval) clearInterval(timerInterval); 
     timerInterval = setInterval(mettreAJourTimer, 1000);
 }
 
@@ -212,9 +212,10 @@ function ajouterEvenements(uneCase, ligne, col) {
 
     // On surligne la ligne et la colonne quand on clique sur une case
     uneCase.addEventListener("focus", function() {
+        //On appelle la fonction qui retire le surlignage de la casee précédente lorsqu'on clique sur une nouvelle case
         retirerSurlignage();
 
-        // On surligne toute la ligne
+        // On surligne toute la ligne (ligne et col sont deja utilisé donc on créer des nouveaux compteurs col2 et ligne2)
         for (let col2 = 0; col2 < 9; col2++) grille[ligne][col2].classList.add("Surlign-Ligne");
 
         // On surligne toute la colonne
@@ -224,7 +225,7 @@ function ajouterEvenements(uneCase, ligne, col) {
         uneCase.classList.add("Surlign-Ligne");
     });
 
-    // On retire le surlignage quand on quitte la case
+    // On retire le surlignage quand on clique en dehors de la grille
     uneCase.addEventListener("blur", function() {
         retirerSurlignage();
     });
@@ -326,6 +327,7 @@ function verifierFin() {
     } else {
         // Si tout correspond à la solution on affiche un message de félicitation
         document.getElementById("messageFin").textContent = "Bravo tu as tout bon !";
+        //On évite que plusieurs chrono tournent en même temps
         if (timerInterval) clearInterval(timerInterval);
     }
 }
@@ -359,6 +361,24 @@ document.getElementById("boutonValider").addEventListener("click", function() {
     verifierFin();
 });
 
+//Reinitialise la grille lorsqu'on appuie sur Réinitialiser
+function resetGrille() {
+    for (let ligne = 0; ligne < 9; ligne++) {
+        for (let col = 0; col < 9; col++) {
+            if (grille[ligne][col].tagName === "INPUT") {
+                grille[ligne][col].value = "";
+                grille[ligne][col].parentElement.classList.remove("CaseBonne", "CaseFausse");
+            }
+        }
+    }
+    //Efface aussi le message de fin laisser par le bouton Valider
+    document.getElementById("messageFin").textContent = "";
+}
+//On lance la fonction resetGrille quand on clique sur le bouton Réinitialiser
+document.getElementById("boutonReset").addEventListener("click", resetGrille);
+
+
+//On retire l'ancien mode de couleur du body avant d'appliquer le nouveau, pour éviter que deux modes se cumulent
 function resetModes() {
     document.body.classList.remove(
         "ModeEte",
@@ -367,7 +387,7 @@ function resetModes() {
         "ModeAutomne"
     );
 }
-
+//Lance la fonction resetModes lorsqu'on appuie sur un bouton de saison 
 document.getElementById("boutonEte").addEventListener("click", function() {
     resetModes();
     document.body.classList.add("ModeEte");
@@ -396,13 +416,17 @@ document.getElementById("boutonAutomne").addEventListener("click", function() {
     chargerNiveau("automne");
 });
 
+
+//Génèration de 30 éléments animés qui tombent en fonction de la saison choisie
 function creerDecors(type) {
-    let container = document.getElementById("decorations");
-    container.innerHTML = "";
-
+    // On récupère le conteneur des décorations (zone ou les éléments animés vont tomber)
+    let zoneDecors = document.getElementById("decorations");
+    zoneDecors.innerHTML = "";
+    
     for (let i = 0; i < 30; i++) {
+        // On crée un div pour chaque élément
         let elem = document.createElement("div");
-
+        // On choisit l'emoji selon la saison
         if (type === "hiver") {
             elem.classList.add("flocon");
             elem.textContent = "❄️";
@@ -420,18 +444,20 @@ function creerDecors(type) {
             elem.textContent = "🍂";
         }
 
+        // On donne à chaque élément une position/durée/taille aléatoire
         elem.style.left = Math.random() * 100 + "vw";
         elem.style.animationDuration = (3 + Math.random() * 5) + "s";
         elem.style.fontSize = (15 + Math.random() * 20) + "px";
 
-        container.appendChild(elem);
+        // Insère l'élément à l'intérieur de la div decorations dans le HTML
+        zoneDecors.appendChild(elem);
     }
 }
 
 // Temps de jeux
 function mettreAJourTimer() {
     secondes++;
-
+    // On convertit les secondes en minutes et on récupère les secondes restantes
     let minutes = Math.floor(secondes / 60);
     let sec = secondes % 60;
 
@@ -442,6 +468,36 @@ function mettreAJourTimer() {
 
     document.getElementById("timer").textContent = affichage;
 }
+
+
+document.getElementById("boutonIndice").addEventListener("click", function() {
+    // On récupère toutes les cases vides
+    let casesVides = [];
+    for (let ligne = 0; ligne < 9; ligne++) {
+        for (let col = 0; col < 9; col++) {
+            if (grille[ligne][col].tagName === "INPUT" && grille[ligne][col].value === "") {
+
+                //On stocke les coordonnées de chaque case vide pour pouvoir en choisir une au hasard juste après.
+                casesVides.push({ ligne, col });
+            }
+        }
+    }
+
+    // Si toutes les cases sont remplies, on ne fait rien
+    if (casesVides.length === 0) return;
+
+    // On choisit une case vide au hasard
+    let hasard = Math.floor(Math.random() * casesVides.length);
+    let { ligne, col } = casesVides[hasard];
+
+    // On révèle la valeur correcte de cette case
+    grille[ligne][col].value = solution[ligne][col];
+
+    // On la colorie en vert
+    grille[ligne][col].parentElement.classList.add("CaseBonne");
+});
+
+
 
 // On génère le tableau HTML puis on charge le niveau Eté au démarrage
 genererTableau();
