@@ -1,7 +1,7 @@
 // On crée un tableau qui va stocker toutes les solutions et cases fixes par saison
 const niveaux = {
 
-    // ETE = grille originale, la plus facile, chargée au démarrage
+    // ETE = grille la plus facile, chargée au démarrage
     ete: {
         solution: [
             [3, 7, 4, 1, 6, 5, 9, 2, 8],
@@ -79,7 +79,7 @@ const niveaux = {
         ]
     },
 
-    // HIVER = expert, le plus difficile
+    // HIVER = le plus difficile
     hiver: {
         solution: [
             [8, 2, 7, 1, 5, 4, 3, 9, 6],
@@ -106,17 +106,29 @@ const niveaux = {
     }
 };
 
+
+
+
+
+
 // On crée un tableau vide qui va stocker toute la grille
 let grille = [];
 
-// On crée la solution et le timer
+// On crée le taleau pour les solution et le timer
 let solution = [];
 let secondes = 0;
 let timerInterval = null;
 
-// Fonction qui génère les lignes et colonnes du tableau HTML
+
+
+
+
+
+
+// Fonction qui crée la structure de la grille HTML vide
 function genererTableau() {
     const table = document.getElementById("sudokuTable");
+    //Vide le tableau avant de le regénérer
     table.innerHTML = "";
 
     // Boucle sur les lignes (0 à 8)
@@ -131,23 +143,23 @@ function genererTableau() {
             let td = document.createElement("td");
 
             // On donne un id à chaque case ex: "2-5"
-            td.id = `${ligne}-${col}`;
+            td.id = ligne + "-" + col;
 
             // On ajoute la classe Lign sur les colonnes 2 et 5 pour les bordures épaisses
             if (col === 2 || col === 5) td.classList.add("Lign");
-
+    
             tr.appendChild(td);
         }
         table.appendChild(tr);
     }
 }
 
-// Fonction qui charge un niveau selon la saison choisie
+// Fonction qui rempli la grille vide avec valeur des tableaux (selon le niveau choisi)
 function chargerNiveau(saison) {
     const niveau = niveaux[saison];
-    if (!niveau) return;
+    if (niveau == null) return;
 
-    solution = niveau.solution;
+    solution = niveau.solution; //on stocke les solitions du niveau choisi
 
     // Boucle sur les lignes (0 à 8)
     for (let ligne = 0; ligne < 9; ligne++) {
@@ -157,13 +169,13 @@ function chargerNiveau(saison) {
         for (let col = 0; col < 9; col++) {
 
             // On récupère l'élément HTML grâce à son id ex: "2-5"
-            let td = document.getElementById(`${ligne}-${col}`);
-            td.innerHTML = "";
+            let td = document.getElementById(ligne + "-" + col);
+            td.innerHTML = ""; 
 
             // On retire les anciennes classes au changement de niveau
             td.classList.remove("case-fixe", "CaseBonne", "CaseFausse", "Dark-Case", "Dark-Case-Lign");
 
-            const valeurFixe = niveau.fixes[ligne][col];
+            const valeurFixe = niveau.fixes[ligne][col]; //on stocke les valeur fixes du niveau choisi
 
             // Si la case est fixe, on affiche la valeur et on colorie en bleu
             if (valeurFixe !== null) {
@@ -191,7 +203,7 @@ function chargerNiveau(saison) {
                 // On stocke l'input dans la grille
                 grille[ligne][col] = input;
 
-                // On ajoute les écouteurs sur l'input
+                // On ajoute les actions sur l'input
                 ajouterEvenements(input, ligne, col);
             }
         }
@@ -200,22 +212,42 @@ function chargerNiveau(saison) {
     // On remet le timer à zéro
     secondes = 0;
     document.getElementById("timer").textContent = "00:00";
-    document.getElementById("messageFin").textContent = "";
+    document.getElementById("messageFin").textContent = "";  //On efface le message de fin laissé par la partie précédente
 
-    //Arrete le timer avant d'un relancer un nouveau
-    if (timerInterval) clearInterval(timerInterval); 
+    // Arrete le timer avant d'en relancer un nouveau
+    if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(mettreAJourTimer, 1000);
 }
 
-// Fonction qui ajoute les écouteurs sur un input
+
+
+// Temps de jeu
+function mettreAJourTimer() {
+    secondes++;
+    // On convertit les secondes en minutes et on récupère les secondes restantes
+    let minutes = Math.floor(secondes / 60);
+    let sec = secondes % 60;
+
+    // format 00:00
+    let affichage =
+        (minutes < 10 ? "0" + minutes : minutes) + ":" +
+        (sec < 10 ? "0" + sec : sec);
+
+    document.getElementById("timer").textContent = affichage;
+}
+
+
+
+
+// Fonction qui ajoute les actions sur un input
 function ajouterEvenements(uneCase, ligne, col) {
 
     // On surligne la ligne et la colonne quand on clique sur une case
     uneCase.addEventListener("focus", function() {
-        //On appelle la fonction qui retire le surlignage de la casee précédente lorsqu'on clique sur une nouvelle case
+        // On appelle la fonction qui retire le surlignage de la case précédente lorsqu'on clique sur une nouvelle case
         retirerSurlignage();
 
-        // On surligne toute la ligne (ligne et col sont deja utilisé donc on créer des nouveaux compteurs col2 et ligne2)
+        // On surligne toute la ligne (ligne et col sont deja utilisés donc on crée des nouveaux compteurs col2 et ligne2)
         for (let col2 = 0; col2 < 9; col2++) grille[ligne][col2].classList.add("Surlign-Ligne");
 
         // On surligne toute la colonne
@@ -230,9 +262,9 @@ function ajouterEvenements(uneCase, ligne, col) {
         retirerSurlignage();
     });
 
-    // On attend quand l'utilisateur appuie sur une touche du clavier
+    // On écoute quand l'utilisateur appuie sur une touche du clavier
     uneCase.addEventListener("keydown", function(evenement) {
-        //Autorise seulement les chiffres entre 1 et 9
+        // Autorise seulement les chiffres entre 1 et 9
         if (!/^[1-9]$/.test(evenement.key) &&
             evenement.key !== "Backspace" &&
             evenement.key !== "Delete" &&
@@ -246,7 +278,7 @@ function ajouterEvenements(uneCase, ligne, col) {
         // On vérifie que c'est la touche Entrée qui a été appuyée
         if (evenement.key === "Enter") {
 
-            // On empêche le comportement par défaut
+            // On empêche le comportement par défaut de la touche(retour a la ligne)
             evenement.preventDefault();
 
             // Pour passer directement à la case suivante après avoir tapé sur Entrée
@@ -292,6 +324,16 @@ function ajouterEvenements(uneCase, ligne, col) {
             uneCase.parentElement.classList.remove("CaseBonne", "CaseFausse");
         }
     });
+
+    // On vérifie les doublons dès que le joueur tape un chiffre
+    uneCase.addEventListener("input", function() {
+        let valeur = uneCase.value;
+        if (valeur !== "") {
+            verifierDoublons(ligne, col, valeur);
+        } else {
+            uneCase.parentElement.classList.remove("CaseFausse");
+        }
+    });
 }
 
 // Fonction pour retirer le surlignage de toute la grille
@@ -305,16 +347,67 @@ function retirerSurlignage() {
     }
 }
 
+
+
+
+
+
+
+// Vérifie en temps réel si le chiffre saisi est en doublon dans la ligne, colonne ou bloc 3x3
+function verifierDoublons(ligne, col, valeur) {
+    let doublons = false;
+
+    // Récupère la valeur d'une case que ce soit un input ou une case fixe
+    function recupereValeur(caseParcouru) {
+        if (caseParcouru.tagName === "INPUT") return caseParcouru.value;
+        return caseParcouru.textContent;
+    }
+
+    // On vérifie si il y a un doublon dans la ligne
+    for (let c = 0; c < 9; c++) {
+        if (c !== col && recupereValeur(grille[ligne][c]) == valeur) {
+            doublons = true;
+        }
+    }
+
+    // On vérifie il y a un doublon dans la colonne
+    for (let l = 0; l < 9; l++) {
+        if (l !== ligne && recupereValeur(grille[l][col]) == valeur) {
+            doublons = true;
+        }
+    }
+
+    // On vérifie le bloc 3x3
+    let debutLigne = Math.floor(ligne / 3) * 3;
+    let debutCol = Math.floor(col / 3) * 3;
+    for (let l = debutLigne; l < debutLigne + 3; l++) {
+        // On verifie de la meme manière que pour ligne et colonne mais que pour les cases dans le bloc 3x3
+        for (let c = debutCol; c < debutCol + 3; c++) {
+            if ((l !== ligne || c !== col) && recupereValeur(grille[l][c]) == valeur) {
+                doublons = true;
+            }
+        }
+    }
+
+    // On colorie la case en rouge si doublon, sinon on retire la couleur
+    if (doublons) {
+        grille[ligne][col].parentElement.classList.add("CaseFausse");
+    } else {
+        grille[ligne][col].parentElement.classList.remove("CaseFausse");
+    }
+}
+
 // Fonction permettant de vérifier si toute la grille est remplie
 function verifierFin() {
     for (let ligne = 0; ligne < 9; ligne++) {
         for (let col = 0; col < 9; col++) {
-            // Si une case est encore vide, on affiche aucun mot de fin
+            // Si une case est encore vide, on arrête la vérification
             if (grille[ligne][col].tagName === "INPUT" && grille[ligne][col].value === "") {
                 return;
             }
         }
     }
+
 
     // Si on arrive ici, toutes les cases sont remplies, on vérifie la solution
     let Erreurs = 0;
@@ -333,10 +426,14 @@ function verifierFin() {
     } else {
         // Si tout correspond à la solution on affiche un message de félicitation
         document.getElementById("messageFin").textContent = "Bravo tu as tout bon !";
-        //On évite que plusieurs chrono tournent en même temps
+        // On arrete le chrono quand le joueur a tout bon
         if (timerInterval) clearInterval(timerInterval);
     }
 }
+
+
+
+
 
 // Quand on clique sur le bouton valider, on affiche les couleurs de toutes les cases
 document.getElementById("boutonValider").addEventListener("click", function() {
@@ -349,12 +446,11 @@ document.getElementById("boutonValider").addEventListener("click", function() {
             }
         }
     }
-
     // Si toutes les cases sont remplies on affiche les couleurs
     for (let ligne = 0; ligne < 9; ligne++) {
         for (let col = 0; col < 9; col++) {
             if (grille[ligne][col].tagName === "INPUT") {
-                let caseParente = grille[ligne][col].parentElement;
+                let caseParente = grille[ligne][col].parentElement; //parentElement = élément HTML dans lequel se trouve la valeur de la case (donc td)
                 caseParente.classList.remove("CaseBonne", "CaseFausse");
                 if (grille[ligne][col].value == solution[ligne][col]) {
                     caseParente.classList.add("CaseBonne");
@@ -367,24 +463,55 @@ document.getElementById("boutonValider").addEventListener("click", function() {
     verifierFin();
 });
 
-//Reinitialise la grille lorsqu'on appuie sur Réinitialiser
-function resetGrille() {
+
+
+document.getElementById("boutonReset").addEventListener("click", function() {
+    // On parcourt toutes les cases de la grille
     for (let ligne = 0; ligne < 9; ligne++) {
         for (let col = 0; col < 9; col++) {
+            // Si la case est un input on vide sa valeur et on retire les couleurs
             if (grille[ligne][col].tagName === "INPUT") {
                 grille[ligne][col].value = "";
                 grille[ligne][col].parentElement.classList.remove("CaseBonne", "CaseFausse");
             }
         }
     }
-    //Efface aussi le message de fin laisser par le bouton Valider
+    // Efface aussi le message de fin laissé par le bouton Valider
     document.getElementById("messageFin").textContent = "";
-}
-//On lance la fonction resetGrille quand on clique sur le bouton Réinitialiser
-document.getElementById("boutonReset").addEventListener("click", resetGrille);
+});
 
 
-//On retire l'ancien mode de couleur du body avant d'appliquer le nouveau, pour éviter que deux modes se cumulent
+
+// On révèle une case vide au hasard avec la bonne valeur
+document.getElementById("boutonIndice").addEventListener("click", function() {
+    // On récupère toutes les cases vides
+    let casesVides = [];
+    for (let ligne = 0; ligne < 9; ligne++) {
+        for (let col = 0; col < 9; col++) {
+            if (grille[ligne][col].tagName === "INPUT" && grille[ligne][col].value === "") {
+                // On stocke les coordonnées de chaque case vide pour pouvoir en choisir une au hasard juste après
+                casesVides.push({ ligne, col });
+            }
+        }
+    }
+
+    // Si toutes les cases sont remplies, on ne fait rien
+    if (casesVides.length === 0) return;
+
+    // On choisit une case vide au hasard
+    let hasard = Math.floor(Math.random() * casesVides.length);
+    let { ligne, col } = casesVides[hasard];
+
+    // On révèle la valeur correcte de cette case
+    grille[ligne][col].value = solution[ligne][col];
+
+    // On la colorie en vert
+    grille[ligne][col].parentElement.classList.add("CaseBonne");
+});
+
+
+
+// On retire l'ancien mode de couleur du body avant d'appliquer le nouveau, pour éviter que deux modes se cumulent
 function resetModes() {
     document.body.classList.remove(
         "ModeEte",
@@ -393,7 +520,8 @@ function resetModes() {
         "ModeAutomne"
     );
 }
-//Lance la fonction resetModes lorsqu'on appuie sur un bouton de saison 
+
+// Lance la fonction resetModes lorsqu'on appuie sur un bouton de saison ainsi que le décor et la grille correspondant
 document.getElementById("boutonEte").addEventListener("click", function() {
     resetModes();
     document.body.classList.add("ModeEte");
@@ -422,29 +550,25 @@ document.getElementById("boutonAutomne").addEventListener("click", function() {
     chargerNiveau("automne");
 });
 
-
-//Génèration de 30 éléments animés qui tombent en fonction de la saison choisie
+// Fonction pour créer 30 éléments animés qui tombent en fonction de la saison choisie
 function creerDecors(type) {
     // On récupère le conteneur des décorations (zone ou les éléments animés vont tomber)
     let zoneDecors = document.getElementById("decorations");
     zoneDecors.innerHTML = "";
-    
+
     for (let i = 0; i < 30; i++) {
-        // On crée un div pour chaque élément
+        // On crée un div pour chaque emoji
         let elem = document.createElement("div");
         // On choisit l'emoji selon la saison
         if (type === "hiver") {
             elem.classList.add("flocon");
             elem.textContent = "❄️";
-
         } else if (type === "ete") {
             elem.classList.add("papillon");
             elem.textContent = "🦋";
-
         } else if (type === "printemps") {
             elem.classList.add("papillon");
             elem.textContent = "🌸";
-
         } else if (type === "automne") {
             elem.classList.add("feuille");
             elem.textContent = "🍂";
@@ -459,49 +583,6 @@ function creerDecors(type) {
         zoneDecors.appendChild(elem);
     }
 }
-
-// Temps de jeux
-function mettreAJourTimer() {
-    secondes++;
-    // On convertit les secondes en minutes et on récupère les secondes restantes
-    let minutes = Math.floor(secondes / 60);
-    let sec = secondes % 60;
-
-    // format 00:00
-    let affichage =
-        (minutes < 10 ? "0" + minutes : minutes) + ":" +
-        (sec < 10 ? "0" + sec : sec);
-
-    document.getElementById("timer").textContent = affichage;
-}
-
-
-document.getElementById("boutonIndice").addEventListener("click", function() {
-    // On récupère toutes les cases vides
-    let casesVides = [];
-    for (let ligne = 0; ligne < 9; ligne++) {
-        for (let col = 0; col < 9; col++) {
-            if (grille[ligne][col].tagName === "INPUT" && grille[ligne][col].value === "") {
-
-                //On stocke les coordonnées de chaque case vide pour pouvoir en choisir une au hasard juste après.
-                casesVides.push({ ligne, col });
-            }
-        }
-    }
-
-    // Si toutes les cases sont remplies, on ne fait rien
-    if (casesVides.length === 0) return;
-
-    // On choisit une case vide au hasard
-    let hasard = Math.floor(Math.random() * casesVides.length);
-    let { ligne, col } = casesVides[hasard];
-
-    // On révèle la valeur correcte de cette case
-    grille[ligne][col].value = solution[ligne][col];
-
-    // On la colorie en vert
-    grille[ligne][col].parentElement.classList.add("CaseBonne");
-});
 
 
 
