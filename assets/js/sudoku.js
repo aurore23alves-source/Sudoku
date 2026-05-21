@@ -522,6 +522,7 @@ function resetModes() {
 }
 
 // Lance la fonction resetModes lorsqu'on appuie sur un bouton de saison ainsi que le décor et la grille correspondant
+
 document.getElementById("boutonEte").addEventListener("click", function() {
     resetModes();
     document.body.classList.add("ModeEte");
